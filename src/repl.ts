@@ -6,19 +6,19 @@ export function cleanInput(input: string): string[] {
     let inputArray: string[] = cleanedInput.split(/\s+/);
     return inputArray;
 }
-export function startREPL(state: State): void {
+export async function startREPL(state: State): Promise<void> {
 
 
     state.rl.prompt();
     
-    state.rl.on("line", (line) => {
+    state.rl.on("line", async (line) => {
         const cleanedInput = cleanInput(line);
         if(cleanedInput.length > 0) {
             const commands = getCommands();
             const commandName = cleanedInput[0];
             const command = commands[commandName];
             if (command) {
-                command.callback(state);
+                await command.callback(state);
             } else {
                 console.log(`Unknown command: ${commandName}`);
             }
