@@ -1,4 +1,3 @@
-import { createInterface } from "node:readline";
 import { getCommands } from "./get_command.js";
 import { State } from "./state.js";
 export function cleanInput(input: string): string[] {
@@ -17,7 +16,11 @@ export async function startREPL(state: State): Promise<void> {
             const commands = getCommands();
             const commandName = cleanedInput[0];
             const command = commands[commandName];
-            if (command) {
+            if(commandName === "explore" && cleanedInput.length > 1) {
+                const areaName = cleanedInput[1];
+                await command.callback(state, areaName);
+            }
+            else if (command) {
                 await command.callback(state);
             } else {
                 console.log(`Unknown command: ${commandName}`);
