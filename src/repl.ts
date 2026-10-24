@@ -19,6 +19,13 @@ export async function startREPL(state: State): Promise<void> {
             if(commandName === "explore" && cleanedInput.length > 1) {
                 const areaName = cleanedInput[1];
                 await command.callback(state, areaName);
+            }else if(commandName === "catch" && cleanedInput.length > 1) {
+                const pokemonName = cleanedInput[1];
+                await command.callback(state, pokemonName);
+            }
+            else if(commandName === "inspect" && cleanedInput.length > 1) {
+                const pokemonName = cleanedInput[1];
+                await command.callback(state, pokemonName);
             }
             else if (command) {
                 await command.callback(state);
